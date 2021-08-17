@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool isSpeedPowerupActive = false;
     public bool canTrippleShot = false;
     [SerializeField]
     private float playermoveSpeed;
@@ -37,10 +38,7 @@ public class PlayerMovement : MonoBehaviour
             Shoot();
         }
 
-        horizontal = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * Time.deltaTime * horizontal);
-        vertical = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.up * Time.deltaTime * vertical);
+       
 
         //player bounds
 
@@ -69,6 +67,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+
+        if (isSpeedPowerupActive == true)
+        {
+            //print(playermoveSpeed * 2.0f);
+            transform.Translate(Vector3.right * Time.deltaTime * horizontal*playermoveSpeed*2.0f);
+            transform.Translate(Vector3.up * Time.deltaTime * vertical* playermoveSpeed * 2.0f);
+        }
+        else
+        {
+            transform.Translate(Vector3.right * Time.deltaTime * horizontal*playermoveSpeed);
+            transform.Translate(Vector3.up * Time.deltaTime * vertical*playermoveSpeed);
+        }
+
+        
+
+
         if (transform.position.y > 0)
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
@@ -91,7 +107,19 @@ public class PlayerMovement : MonoBehaviour
         canTrippleShot = true;
         StartCoroutine(TripleShotPowerDown());
     }
-   public IEnumerator TripleShotPowerDown()
+    //method to enable speed power up and power down
+    public void SpeedPowerUpOn()
+    {
+        isSpeedPowerupActive = true;
+        StartCoroutine(SpeedPowerUpDown());
+    }
+    public IEnumerator SpeedPowerUpDown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        canTrippleShot = false;
+    }
+
+    public IEnumerator TripleShotPowerDown()
     {
         yield return new WaitForSeconds(5.0f);
         canTrippleShot = false;
