@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float fireRate = 0.25f;
     public float canfire = 0;
     public static PlayerMovement instance;
+    public int playerLives = 5;
 
     private void Awake()
     {
@@ -123,5 +124,13 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         canTrippleShot = false;
+    }
+    public void Damage()
+    {
+        playerLives--;
+        if (playerLives < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
