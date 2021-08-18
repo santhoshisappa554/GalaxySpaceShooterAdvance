@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public float canfire = 0;
     public static PlayerMovement instance;
     public int playerLives = 5;
+    public GameObject explosion;
 
     private void Awake()
     {
@@ -130,7 +131,9 @@ public class PlayerMovement : MonoBehaviour
         playerLives--;
         if (playerLives < 1)
         {
+            Instantiate(explosion,transform.position,Quaternion.identity);
             Destroy(this.gameObject);
+            
         }
     }
 }

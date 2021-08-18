@@ -227,6 +227,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 144679555, guid: 84ed5802dcc3a464f9a4ee04ae2418c4, type: 3}
+      propertyPath: EnemyExplosion
+      value: 
+      objectReference: {fileID: 8435864722604855799, guid: e187be602021af84697fe7a1fb43250a, type: 3}
     - target: {fileID: 7919703787251651921, guid: 84ed5802dcc3a464f9a4ee04ae2418c4, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -483,7 +487,8 @@ MonoBehaviour:
   TriplelaserPrefab: {fileID: 2954987861640370607, guid: b1639a446bb96244599ed3c4ce0c9e92, type: 3}
   fireRate: 2
   canfire: 1
-  playerLives: 5
+  playerLives: 1
+  explosion: {fileID: 1272175063174105181, guid: fb72f95cb9244f0479091817e86a3086, type: 3}
 --- !u!212 &1850230450
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -543,7 +548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850230448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.99, z: 0}
+  m_LocalPosition: {x: 1, y: -3.99, z: 0}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_Children: []
   m_Father: {fileID: 0}
