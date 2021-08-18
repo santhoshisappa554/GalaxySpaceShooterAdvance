@@ -198,4 +198,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f536a53399f3047a4e7d5cdb77fd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyExplosion: {fileID: 8435864722604855799, guid: e187be602021af84697fe7a1fb43250a, type: 3}
   enemySpeed: 5

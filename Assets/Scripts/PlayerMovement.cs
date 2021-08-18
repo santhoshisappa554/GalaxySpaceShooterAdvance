@@ -15,9 +15,12 @@ public class PlayerMovement : MonoBehaviour
     public float fireRate = 0.25f;
     public float canfire = 0;
     public static PlayerMovement instance;
-    public int playerLives = 5;
+    public int playerLives = 3;
     public GameObject explosion;
     public GameObject shield;
+    private UIManager uiManager;
+    private GameManager gameManager;
+    private Spawning spawn;
 
     private void Awake()
     {
@@ -28,6 +31,17 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        spawn = GameObject.Find("SpawnManager").GetComponent<Spawning>();
+        if (uiManager != null)
+        {
+            uiManager.UpdateLives(playerLives);
+        }
+        if (spawn != null)
+        {
+            spawn.StartCoroutineFunctions();
+        }
     }
 
     // Update is called once per frame
@@ -137,6 +151,8 @@ public class PlayerMovement : MonoBehaviour
         if (playerLives < 1)
         {
             Instantiate(explosion,transform.position,Quaternion.identity);
+            gameManager.gameOver = true;
+            uiManager.ShowGameOverScreen();
             Destroy(this.gameObject);
             
         }

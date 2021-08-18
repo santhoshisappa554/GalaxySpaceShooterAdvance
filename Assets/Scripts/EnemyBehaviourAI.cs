@@ -8,10 +8,11 @@ public class EnemyBehaviourAI : MonoBehaviour
     private GameObject EnemyExplosion;
     [SerializeField]
     private float enemySpeed;
+    private UIManager uIManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -31,9 +32,11 @@ public class EnemyBehaviourAI : MonoBehaviour
             if (collision.transform.parent != null)
             {
                 Destroy(collision.transform.gameObject);
+              
             }
             Destroy(collision.gameObject);
             Instantiate(EnemyExplosion, transform.position, Quaternion.identity);
+            uIManager.UpdateScore();
             Destroy(this.gameObject);
         }
         else if (collision.tag == "Player")
