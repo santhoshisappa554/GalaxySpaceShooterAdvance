@@ -45,7 +45,7 @@ public class TrippleShotANDPowerUp : MonoBehaviour
                 }
                 else if (powerUpId == 2)
                 {
-
+                    player.EnableShieldPowerUp();
                 }
 
 

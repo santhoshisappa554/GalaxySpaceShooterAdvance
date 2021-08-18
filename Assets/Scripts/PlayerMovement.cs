@@ -6,12 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public bool isSpeedPowerupActive = false;
     public bool canTrippleShot = false;
+    public bool isShieldActive = false;
     [SerializeField]
     private float playermoveSpeed;
-    [SerializeField]
-    private float horizontal;
-    [SerializeField]
-    private float vertical;
+    private float horizontal, vertical;
     [SerializeField]
     private GameObject laserPrefab,TriplelaserPrefab;
     public float fireRate = 0.25f;
@@ -19,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement instance;
     public int playerLives = 5;
     public GameObject explosion;
+    public GameObject shield;
 
     private void Awake()
     {
@@ -128,6 +127,12 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Damage()
     {
+        if (isShieldActive == true)
+        {
+            isShieldActive = false;
+            shield.SetActive(false);
+            return;
+        }
         playerLives--;
         if (playerLives < 1)
         {
@@ -135,5 +140,10 @@ public class PlayerMovement : MonoBehaviour
             Destroy(this.gameObject);
             
         }
+    }
+    public void EnableShieldPowerUp()
+    {
+        isShieldActive = true;
+        shield.SetActive(true);
     }
 }
