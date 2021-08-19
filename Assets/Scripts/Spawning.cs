@@ -22,7 +22,7 @@ public class Spawning : MonoBehaviour
     }
     IEnumerator EnemySpawn()
     {
-        while (gameManager.gameOver==false)
+        while (true)
         {
             Instantiate(enemyPrefab, new Vector3(Random.Range(-5, 5),6,0),Quaternion.identity);
             yield return new WaitForSeconds(5.0f);

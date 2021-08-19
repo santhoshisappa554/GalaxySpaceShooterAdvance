@@ -21,6 +21,13 @@ public class PlayerMovement : MonoBehaviour
     private UIManager uiManager;
     private GameManager gameManager;
     private Spawning spawn;
+    AudioSource audioSource;
+    [SerializeField]
+    private AudioClip[] audioClip;
+    [SerializeField]
+    private GameObject[] engines;
+    public float hitcount = 0;
+
 
     private void Awake()
     {
@@ -34,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawn = GameObject.Find("SpawnManager").GetComponent<Spawning>();
+        audioSource = GetComponent<AudioSource>();
         if (uiManager != null)
         {
             uiManager.UpdateLives(playerLives);
@@ -53,12 +61,7 @@ public class PlayerMovement : MonoBehaviour
             Shoot();
         }
 
-       
-
         //player bounds
-
-      
-
     }
 
     private void Shoot()
@@ -69,11 +72,15 @@ public class PlayerMovement : MonoBehaviour
             if (canTrippleShot == true)
             {
                 Instantiate(TriplelaserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-                
+                audioSource.clip = audioClip[1];
+                audioSource.Play();
+
             }
             else
             {
                 Instantiate(laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                audioSource.clip = audioClip[2];
+                audioSource.Play();
             }
            
             canfire = Time.deltaTime + fireRate;
@@ -141,20 +148,37 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Damage()
     {
+        
+        hitcount++;
+        if (hitcount == 1)
+        {
+            engines[0].SetActive(true);
+        }
+        else if (hitcount == 2)
+        {
+            engines[1].SetActive(true);
+        }
+
         if (isShieldActive == true)
         {
             isShieldActive = false;
             shield.SetActive(false);
-            return;
+            //return;
         }
-        playerLives--;
-        if (playerLives < 1)
+        else
         {
-            Instantiate(explosion,transform.position,Quaternion.identity);
-            gameManager.gameOver = true;
-            uiManager.ShowGameOverScreen();
-            Destroy(this.gameObject);
-            
+            playerLives--;
+            uiManager.UpdateLives(playerLives);
+            if (playerLives < 1)
+            {
+                Instantiate(explosion, transform.position, Quaternion.identity);
+                //audioSource.clip = explosionAudioClip;
+                audioSource.Play();
+                gameManager.gameOver = true;
+                uiManager.ShowGameOverScreen();
+                gameObject.SetActive(false);
+
+            }
         }
     }
     public void EnableShieldPowerUp()
